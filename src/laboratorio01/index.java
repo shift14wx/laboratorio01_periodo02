@@ -10,6 +10,7 @@ import clases.cliente;
 import clases.producto;
 import clases.transaccion;
 import com.orsoncharts.plot.PiePlot3D;
+import java.awt.Color;
 import static java.lang.System.out;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -1379,8 +1380,10 @@ public class index extends javax.swing.JFrame {
         }*/
     if (totalTemp >= Double.parseDouble(this.lblPrecio.getText())) {
         this.lblStado.setText("FINALIZADO");
+        this.lblStado.setForeground(Color.GREEN);
     }else{
         this.lblStado.setText("FALTA");
+        this.lblStado.setForeground(Color.RED);
     }
 
     }
