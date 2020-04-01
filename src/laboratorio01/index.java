@@ -1390,40 +1390,32 @@ public class index extends javax.swing.JFrame {
     //AQUI SE CALCULA LOS PERCENTILES
     public void calcularCuartil(){
         DescriptiveStatistics stats = new DescriptiveStatistics();
+        ArrayList<Double> pagosTemp = this.pagos;
         this.pagos.forEach(pago->{
             stats.addValue(pago);
         });
         Double q1 = stats.getPercentile(25);
         Double q2 = stats.getPercentile(50);
         Double q3 = stats.getPercentile(75);
+        System.out.println(q1+" "+q2+" "+q3);
         Integer[] ql = {0,0,0,0};
-        
-        this.pagos.forEach(pago->{
+        for (Double pago : pagosTemp) {
             if (pago>=0 && pago <=q1) {
                 ql[0]+=1;
-            }
-        });
-        this.pagos.forEach(pago->{
-            if (q1>=0 && pago <=q2) {
+            }else if (pago>=q1 && pago<=q2) {
                 ql[1]+=1;
-            }
-        });
-        this.pagos.forEach(pago->{
-            if (q2>=0 && pago <=q3) {
+            }else if (pago>=q2 && pago<=q3) {
                 ql[2]+=1;
-            }
-        });
-        this.pagos.forEach(pago->{
-            if (q3>=0 && pago <=stats.getMax()) {
+            }else if (pago>=q3 && pago<=stats.getMax()) {
                 ql[3]+=1;
             }
-        });
+        }
 
         DefaultPieDataset pieDataset = new DefaultPieDataset();
-        pieDataset.setValue("Cuartil #1 (0-25)",ql[0]);
-        pieDataset.setValue("Cuartil #2 (25-50)",ql[1]);
-        pieDataset.setValue("Cuartil #3 (50-75)",ql[2]);
-        pieDataset.setValue("Cuartil #4 (75-100)",ql[3]);
+        pieDataset.setValue("Cuartil #1 (0-25) : "+ql[0],ql[0]);
+        pieDataset.setValue("Cuartil #2 (25-50): "+ql[1],ql[1]);
+        pieDataset.setValue("Cuartil #3 (50-75): "+ql[2],ql[2]);
+        pieDataset.setValue("Cuartil #4 (75-100): "+ql[3],ql[3]);
         JFreeChart chart = ChartFactory.createPieChart("Cuartiles", pieDataset, true,true,true);
         ChartFrame frame = new ChartFrame("Cuartiles",chart);
         frame.setVisible(true);
