@@ -1047,13 +1047,16 @@ public class index extends javax.swing.JFrame {
             Double montoCalculado = Double.parseDouble(this.spMonto.getValue().toString());
             // totalTemp viene de la gestion que se hace en reformarTablaPorClienteYProducto();
             System.out.println("montoCalculado: "+montoCalculado+" > "+" faltaDePagar: "+this.faltanteTemp);
-            if ( this.faltanteTemp!=0.0 && montoCalculado > this.faltanteTemp ) { 
+            if ( this.faltanteTemp>0.0 && montoCalculado > this.faltanteTemp ) { 
                 // si el monto a tratar de pagar es mayor al faltante de pagar
                 //entonces en montoCalculado que es lo que se registrara, se resta para dar un "vuelto"
                 JOptionPane.showMessageDialog(null, "Devolucion de: $"+(montoCalculado-this.faltanteTemp));
                 montoCalculado = this.faltanteTemp;
-            }else if (this.faltanteTemp!=0.0 && montoCalculado > Double.parseDouble(this.lblPrecio.getText()) ) {
+            }else if (this.faltanteTemp>0.0 && montoCalculado > Double.parseDouble(this.lblPrecio.getText()) ) {
                 JOptionPane.showMessageDialog(null, "Devolucion de: $"+(montoCalculado-this.faltanteTemp));
+                montoCalculado = Double.parseDouble(this.lblPrecio.getText());
+            }else if (montoCalculado > Double.parseDouble(this.lblPrecio.getText())){
+                JOptionPane.showMessageDialog(null, "Devolucion de: $"+(montoCalculado-Double.parseDouble(this.lblPrecio.getText())));
                 montoCalculado = Double.parseDouble(this.lblPrecio.getText());
             }
             
